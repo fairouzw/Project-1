@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  border: 1px black solid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.image-box {
+  display: flex;
+}
+
+h1 {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Snowburst One", cursive;
+}
+
+body {
+  /* background-image: url("../images/JungleBackground.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh; */
+}
