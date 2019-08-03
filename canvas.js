@@ -165,3 +165,4 @@ function eatSelf() {
 
 intersect({ x: snakeX, y: snakeY, width: 30, height: 30 }, { x: 0, y: 0, width: 30 , height: 30 * }) */
 
+//testing
