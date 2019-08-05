@@ -1,5 +1,10 @@
 let canvas = document.getElementById('myGame');
 let ctx = canvas.getContext("2d");
+document.getElementById('score').innerText = "SCORE: 0"
+document.getElementById('top-score').innerText = `TOP SCORE:`
+let localStorageKey = localStorage.getItem("highestScore")
+document.getElementById('top-score').innerText = `TOP SCORE:${localStorageKey}`
+
 
 let score = 0;
 
@@ -15,7 +20,6 @@ ground.src = "images/ground.jpg";
 let gameOverImg = new Image();
 gameOverImg.src = "images/gameover.png";
 
-
 let foodImg = new Image();
 foodImg.src = "images/banana.png";
 
@@ -30,14 +34,6 @@ snakeArr[0] = {
   x: 300,
   y: 300
 }
-
-// snakeArr.push({ x: 330, y: 300 })
-// snakeArr.push({ x: 360, y: 300 })
-// snakeArr.push({ x: 390, y: 300 })
-// snakeArr.push({ x: 410, y: 300 })
-// snakeArr.push({ x: 440, y: 300 })
-// snakeArr.push({ x: 470, y: 300 })
-// snakeArr.push({ x: 500, y: 300 })
 
 let d;
 
@@ -69,7 +65,7 @@ function drawGame() {
 
   }
 
-  //DRAW BANANA
+  //draw banana 
 
   ctx.drawImage(foodImg, bananaPos.x, bananaPos.y, 30, 30);
 
@@ -106,20 +102,24 @@ function drawGame() {
   if (bananaPos.x == snakeX && bananaPos.y == snakeY) {
     snakeArr.push(snakeHead)
     score += 10;
-    document.getElementById('high-score').innerText = `Highest Score: ${score}`;
-    bananaPos.x = 90 + Math.floor(Math.random() * 10) * 30
-    bananaPos.y = 90 + Math.floor(Math.random() * 10) * 30
+    if (typeof (Storage) !== "undefined") {
+      // Store
+      if (localStorageKey < score)
+        localStorage.setItem("highestScore", score);
+      // Retrieve
+    }
+    document.getElementById('score').innerText = `SCORE:${score}`;
 
+    bananaPos.x = Math.floor(Math.random() * 10) * 30;
+    bananaPos.y = Math.floor(Math.random() * 10) * 30;
   }
 
   if (snakeX < 0 || snakeY < 0 || snakeX >= 600 || snakeY >= 600) {
     gameOver()
   }
-
-
 }
 
-let startGame = setInterval(drawGame, 200);
+let startGame = setInterval(drawGame, 100);
 
 function gameOver() {
   clearInterval(startGame);
@@ -130,39 +130,13 @@ function gameOver() {
 
 function collide(a, b) {
   if (a.x == b.x && a.y == b.y) {
-    console.log("loser", a.x, b.x, a.y, b.y)
     gameOver()
   }
 }
 
 function eatSelf() {
   let head = snakeArr[0];
-  console.log("snakeArr", snakeArr)
-  //it uses position x=300 and y=300 as defined above. 
   for (let i = 1; i < snakeArr.length; i++) {
     collide(head, snakeArr[i])
   }
 }
-
-
-
-/* function intersect(a, b) {
- var aLeft = a.x;
- var aTop = a.y;
- var aRight = a.x + a.width;
- var aBottom = a.y + a.height;
-
- var bLeft = b.x;
- var bTop = b.y;
- var bRight = b.x + b.width;
- var bBottom = b.y + b.height;
-
- return !(aLeft > bRight ||
-   aRight < bLeft ||
-   aTop > bBottom ||
-   aBottom < bTop)
-}
-
-intersect({ x: snakeX, y: snakeY, width: 30, height: 30 }, { x: 0, y: 0, width: 30 , height: 30 * }) */
-
-//testing
