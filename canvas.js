@@ -1,9 +1,9 @@
 let canvas = document.getElementById('myGame');
 let ctx = canvas.getContext("2d");
-document.getElementById('score').innerText = "SCORE: 0"
+document.getElementById('score').innerHTML = "YOUR SCORE: 000"
 document.getElementById('top-score').innerText = `TOP SCORE:`
 let localStorageKey = localStorage.getItem("highestScore")
-document.getElementById('top-score').innerText = `TOP SCORE:${localStorageKey}`
+document.getElementById('top-score').innerText = `TOP SCORE: ${localStorageKey}`
 
 
 let score = 0;
@@ -35,6 +35,7 @@ snakeArr[0] = {
   y: 300
 }
 
+
 let d;
 
 document.addEventListener("keydown", direction);
@@ -63,6 +64,8 @@ function drawGame() {
     ctx.fillStyle = "green";
     ctx.fillRect(snakeArr[i].x, snakeArr[i].y, 30, 30);
 
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(snakeArr[i].x, snakeArr[i].y, 30, 30);
   }
 
   //draw banana 
@@ -123,7 +126,21 @@ let startGame = setInterval(drawGame, 100);
 
 function gameOver() {
   clearInterval(startGame);
-  ctx.drawImage(gameOverImg, 190, 200, 250, 200);
+
+  ctx.drawImage(gameOverImg, 175, 200, 250, 200);
+  ctx.font = "25px myFirstFont";
+  ctx.fillStyle = "black";
+  ctx.textAlign = "center";
+  ctx.fillText("PRESS SPACEBAR TO RESTART", canvas.width / 2, canvas.height / 4);
+
+  document.onkeydown = function (e) {
+    if (e.keyCode == 32) {
+      location.reload();
+      //how to reload canvas only
+      console.log("Spacebar hit!")
+    }
+  }
+
 }
 
 //collision detection - between head and body 
@@ -140,3 +157,4 @@ function eatSelf() {
     collide(head, snakeArr[i])
   }
 }
+
