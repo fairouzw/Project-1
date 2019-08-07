@@ -7,7 +7,7 @@ document.getElementById('top-score').innerText = `TOP SCORE: ${localStorageKey}`
 
 
 let score = 0;
-let speed = 100;
+let speed = 150;
 
 
 /* let state = {
@@ -97,7 +97,7 @@ function drawGame() {
     y: snakeY
   }
 
-  //add snake head
+  //adds snake head
   snakeArr.unshift(snakeHead)
 
   eatSelf()
@@ -107,8 +107,20 @@ function drawGame() {
   if (bananaPos.x == snakeX && bananaPos.y == snakeY) {
     snakeArr.push(snakeHead)
     score += 10;
-    if (score == 10) {
+    if (score >= 100) {
+      speed = 100
+    }
+    if (score >= 200) {
+      speed = 75
+    }
+    if (score >= 300) {
       speed = 50
+    }
+    if (score >= 400) {
+      speed = 40
+    }
+    if (score >= 500) {
+      speed = 30
     }
 
     if (typeof (Storage) !== "undefined") {
@@ -128,14 +140,7 @@ function drawGame() {
   }
 }
 
-
 let startGame = setInterval(drawGame, speed);
-
-// if (score == 110) {
-//   console.log("something")
-// }
-// console.log(score)
-
 
 function gameOver() {
   clearInterval(startGame);
@@ -146,14 +151,18 @@ function gameOver() {
   ctx.textAlign = "center";
   ctx.fillText("PRESS SPACEBAR TO RESTART", canvas.width / 2, canvas.height / 4);
 
+  if (score > localStorageKey) {
+    alert("Bananas! New Top Score!!!")
+  }
+
   document.onkeydown = function (e) {
     if (e.keyCode == 82) {
-      alert("mir has the most score")
+      alert("Mir Saidi has the most score!!!")
     }
     if (e.keyCode == 32) {
       location.reload();
-      //how to reload canvas only
-      console.log("Spacebar hit!")
+      //how to reload canvas only??
+
     }
   }
 
