@@ -10,25 +10,23 @@
 
 canvas {
   border: 1px black solid;
-  position: absolute;
+  display: flex;
+  /* position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 }
 
-.image-box {
+#main {
   display: flex;
 }
 
 h1 {
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: myFirstFont /* "Snowburst One", cursive */;
+  font-family: myFirstFont;
+  display: flex;
   font-weight: 800;
-  color: #edc244 /* #653821 */;
-  font-size: 40px;
+  color: #edc244;
+  font-size: 50px;
 }
 
 body {
@@ -38,19 +36,61 @@ body {
   height: 100vh;
 }
 
+#container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 25px;
+}
+
 #score {
   color: #edc244;
-  font-family: myFirstFont /* "Snowburst One", cursive */;
+  font-family: myFirstFont;
+  font-size: 20px;
 }
 
 #top-score {
   color: #edc244;
-  font-family: myFirstFont /* "Snowburst One", cursive */;
+  font-family: myFirstFont;
+  font-size: 20px;
 }
 
 #scoreboard {
   background-image: url("../images/ground.jpg");
-  display: block;
-  width: 15%;
   text-align: center;
+  min-width: 250px;
+}
+
+#instruction {
+  background-image: url("../images/ground.jpg");
+  display: display;
+  color: #edc244;
+  font-family: myFirstFont;
+  /*  width: 200px; 
+  margin-left: 100px;
+  text-align: center;
+  margin-top: 200px; */
+}
+
+#title-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+#title-banner > img {
+  width: 100px;
+  height: 80px;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+}
+
+#top-container {
+  display: flex;
+  justify-content: center;
 }

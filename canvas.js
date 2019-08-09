@@ -9,13 +9,6 @@ document.getElementById('top-score').innerText = `TOP SCORE: ${localStorageKey}`
 let score = 0;
 let speed = 150;
 
-
-/* let state = {
-play: true,
-pause: false,
-gameOver: false
-} */
-
 let ground = new Image();
 ground.src = "images/ground.jpg";
 
@@ -37,24 +30,31 @@ snakeArr[0] = {
   y: 300
 }
 
+//event listener stuff
 
 let d;
+let keysEnabled = true;
 
 document.addEventListener("keydown", direction);
 
 function direction(event) {
-  if (event.keyCode == 37 && d != "RIGHT") {
-    d = "LEFT";
-  } else if (event.keyCode == 38 && d != "DOWN") {
-    d = "UP";
-  } else if (event.keyCode == 39 && d != "LEFT") {
-    d = "RIGHT";
-  } else if (event.keyCode == 40 && d != "UP") {
-    d = "DOWN";
+  if (keysEnabled) {
+    if (event.keyCode == 37 && d != "RIGHT") {
+      d = "LEFT";
+    } else if (event.keyCode == 38 && d != "DOWN") {
+      d = "UP";
+    } else if (event.keyCode == 39 && d != "LEFT") {
+      d = "RIGHT";
+    } else if (event.keyCode == 40 && d != "UP") {
+      d = "DOWN";
+    }
   }
+  keysEnabled = false
 }
 
+
 function drawGame() {
+  keysEnabled = true
 
   //canvas background
 
@@ -81,14 +81,20 @@ function drawGame() {
 
   snakeArr.pop();
 
+  // if (dArr.length >= 1) { d = dArr.shift() }
+
   if (d == "LEFT") {
     snakeX -= 30;
+
   } if (d == "UP") {
     snakeY -= 30;
+
   } if (d == "RIGHT") {
     snakeX += 30;
+
   } if (d == "DOWN") {
     snakeY += 30;
+
   }
 
   //create new snake head
@@ -107,20 +113,26 @@ function drawGame() {
   if (bananaPos.x == snakeX && bananaPos.y == snakeY) {
     snakeArr.push(snakeHead)
     score += 10;
-    if (score >= 100) {
+
+    if (score === 100) {
       speed = 100
+      changeInterval()
     }
-    if (score >= 200) {
+    if (score === 200) {
       speed = 75
+      changeInterval()
     }
-    if (score >= 300) {
+    if (score === 300) {
       speed = 50
+      changeInterval()
     }
-    if (score >= 400) {
+    if (score === 400) {
       speed = 40
+      changeInterval()
     }
-    if (score >= 500) {
+    if (score === 500) {
       speed = 30
+      changeInterval()
     }
 
     if (typeof (Storage) !== "undefined") {
@@ -129,7 +141,7 @@ function drawGame() {
         localStorage.setItem("highestScore", score);
       // Retrieve
     }
-    document.getElementById('score').innerText = `SCORE:${score}`;
+    document.getElementById('score').innerText = `SCORE: ${score}`;
 
     bananaPos.x = Math.floor(Math.random() * 10) * 30;
     bananaPos.y = Math.floor(Math.random() * 10) * 30;
@@ -140,7 +152,12 @@ function drawGame() {
   }
 }
 
-let startGame = setInterval(drawGame, speed);
+let startGame;
+function changeInterval() {
+  if (startGame) clearInterval(startGame);
+  startGame = setInterval(drawGame, speed);
+}
+changeInterval()
 
 function gameOver() {
   clearInterval(startGame);
@@ -152,16 +169,15 @@ function gameOver() {
   ctx.fillText("PRESS SPACEBAR TO RESTART", canvas.width / 2, canvas.height / 4);
 
   if (score > localStorageKey) {
-    alert("Bananas! New Top Score!!!")
+    alert("Sweet Bananas!!! New Top Score!!!")
   }
 
   document.onkeydown = function (e) {
     if (e.keyCode == 82) {
-      alert("Mir Saidi has the most score!!!")
+      alert("Mir Saidi has most score!!!")
     }
     if (e.keyCode == 32) {
-      location.reload();
-      //how to reload canvas only??
+      location.reload(); //reloads page 
 
     }
   }
@@ -180,6 +196,8 @@ function eatSelf() {
   let head = snakeArr[0];
   for (let i = 1; i < snakeArr.length; i++) {
     collide(head, snakeArr[i])
+
   }
 }
+
 

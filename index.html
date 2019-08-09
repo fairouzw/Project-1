@@ -12,16 +12,27 @@
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
-    <div>
-      <div id="title-banner">
-        <h1 id="gameName">BOOMSLANG</h1>
+    <div id="main">
+      <div id="top-container">
+        <div id="title-banner">
+          <img src="images/snake.png" alt="" />
+          <h1 id="gameName">BOOMSLANG</h1>
+        </div>
+      </div>
+
+      <div id="container">
+        <div id="instruction">How to play the Game</div>
+
+        <div>
+          <canvas id="myGame" height="600px" width="600px"></canvas>
+        </div>
+
+        <div id="scoreboard">
+          <div id="score"></div>
+          <div id="top-score"></div>
+        </div>
       </div>
     </div>
-    <div id="scoreboard">
-      <div id="score"></div>
-      <div id="top-score"></div>
-    </div>
-    <canvas id="myGame" height="600px" width="600px"></canvas>
     <script src="canvas.js"></script>
 
     <!--  <div>
