@@ -9,12 +9,8 @@
 }
 
 canvas {
-  border: 1px black solid;
+  border: 4px black solid;
   display: flex;
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
 }
 
 #main {
@@ -60,17 +56,20 @@ body {
   background-image: url("../images/ground.jpg");
   text-align: center;
   min-width: 250px;
+  border: 4px black solid;
 }
 
 #instruction {
-  background-image: url("../images/ground.jpg");
   display: display;
   color: #edc244;
   font-family: myFirstFont;
-  /*  width: 200px; 
-  margin-left: 100px;
+  font-size: 18px;
   text-align: center;
-  margin-top: 200px; */
+}
+
+#instruction > img {
+  width: 150px;
+  height: 90px;
 }
 
 #title-banner {

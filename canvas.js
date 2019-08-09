@@ -1,5 +1,6 @@
 let canvas = document.getElementById('myGame');
 let ctx = canvas.getContext("2d");
+
 document.getElementById('score').innerHTML = "YOUR SCORE: 000"
 document.getElementById('top-score').innerText = `TOP SCORE:`
 let localStorageKey = localStorage.getItem("highestScore")
@@ -8,6 +9,8 @@ document.getElementById('top-score').innerText = `TOP SCORE: ${localStorageKey}`
 
 let score = 0;
 let speed = 150;
+
+//images 
 
 let ground = new Image();
 ground.src = "images/ground.jpg";
@@ -18,10 +21,26 @@ gameOverImg.src = "images/gameover.png";
 let foodImg = new Image();
 foodImg.src = "images/banana.png";
 
+
 let bananaPos = {
   x: Math.floor(Math.random() * 20) * 30,
   y: Math.floor(Math.random() * 20) * 30
 }
+
+let foodImg2 = new Image();
+foodImg2.src = "images/bananabunch.png"
+
+//audio
+
+let eat = new Audio();
+eat.src = "Audio/OldSchool45.m4a";
+
+let dies = new Audio();
+dies.src = "Audio/OldSchool43.m4a";
+
+let win = new Audio();
+win.src = "Audio/Win.mp3";
+
 
 let snakeArr = [];
 
@@ -30,7 +49,7 @@ snakeArr[0] = {
   y: 300
 }
 
-//event listener stuff
+//event listener 
 
 let d;
 let keysEnabled = true;
@@ -72,7 +91,12 @@ function drawGame() {
 
   //draw banana 
 
-  ctx.drawImage(foodImg, bananaPos.x, bananaPos.y, 30, 30);
+  if (score % 50 == 0 && score != 0) {
+    ctx.drawImage(foodImg2, bananaPos.x, bananaPos.y, 30, 30)
+  } else {
+    ctx.drawImage(foodImg, bananaPos.x, bananaPos.y, 30, 30);
+  }
+
 
   // head position
 
@@ -81,7 +105,6 @@ function drawGame() {
 
   snakeArr.pop();
 
-  // if (dArr.length >= 1) { d = dArr.shift() }
 
   if (d == "LEFT") {
     snakeX -= 30;
@@ -108,32 +131,37 @@ function drawGame() {
 
   eatSelf()
 
-  //checks if snakeHead collides with boundaries
+  //eats banana
 
   if (bananaPos.x == snakeX && bananaPos.y == snakeY) {
     snakeArr.push(snakeHead)
     score += 10;
+    eat.play();
 
     if (score === 100) {
-      speed = 100
+      speed = 120
       changeInterval()
     }
     if (score === 200) {
-      speed = 75
+      speed = 110
       changeInterval()
     }
     if (score === 300) {
-      speed = 50
+      speed = 85
       changeInterval()
     }
     if (score === 400) {
-      speed = 40
+      speed = 70
       changeInterval()
     }
     if (score === 500) {
-      speed = 30
+      speed = 70
       changeInterval()
     }
+
+    bananaPos.x = Math.floor(Math.random() * 10) * 30;
+    bananaPos.y = Math.floor(Math.random() * 10) * 30;
+
 
     if (typeof (Storage) !== "undefined") {
       // Store
@@ -143,8 +171,7 @@ function drawGame() {
     }
     document.getElementById('score').innerText = `SCORE: ${score}`;
 
-    bananaPos.x = Math.floor(Math.random() * 10) * 30;
-    bananaPos.y = Math.floor(Math.random() * 10) * 30;
+
   }
 
   if (snakeX < 0 || snakeY < 0 || snakeX >= 600 || snakeY >= 600) {
@@ -161,15 +188,27 @@ changeInterval()
 
 function gameOver() {
   clearInterval(startGame);
-
-  ctx.drawImage(gameOverImg, 175, 200, 250, 200);
-  ctx.font = "25px myFirstFont";
+  ctx.font = "23px myFirstFont";
   ctx.fillStyle = "black";
   ctx.textAlign = "center";
   ctx.fillText("PRESS SPACEBAR TO RESTART", canvas.width / 2, canvas.height / 4);
 
+
   if (score > localStorageKey) {
-    alert("Sweet Bananas!!! New Top Score!!!")
+    win.play();
+
+
+    ctx.font = "33px myFirstFont";
+    ctx.fillStyle = '#edc244';
+    ctx.textAlign = "center";
+
+    ctx.fillText("Sweet Bananas!", canvas.width / 2, canvas.height / 2);
+    ctx.fillText("You set a new Top Score!", canvas.width / 2, canvas.height / 1.7)
+
+
+  } else {
+    dies.play();
+    ctx.drawImage(gameOverImg, 175, 200, 250, 200);
   }
 
   document.onkeydown = function (e) {
