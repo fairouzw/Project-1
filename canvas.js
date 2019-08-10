@@ -200,7 +200,7 @@ function gameOver() {
   ctx.font = "25px myFirstFont";
   ctx.fillStyle = "black";
   ctx.textAlign = "center";
-  ctx.fillText("PRESS SPACEBAR TO RESTART", canvas.width / 2, canvas.height / 4);
+  ctx.fillText("PRESS \"SPACEBAR\" TO RESTART", canvas.width / 2, canvas.height / 4);
 
   if (score > localStorageKey) {
     win.play();
