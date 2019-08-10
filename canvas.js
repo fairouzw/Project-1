@@ -135,7 +135,12 @@ function drawGame() {
 
   if (bananaPos.x == snakeX && bananaPos.y == snakeY) {
     snakeArr.push(snakeHead)
-    score += 10;
+    if (score % 50 == 0 && score != 0) {
+      score += 30;
+    } else {
+      score += 10;
+    }
+
     eat.play();
 
     if (score === 100) {
