@@ -56,7 +56,7 @@ body {
   background-image: url("../images/ground.jpg");
   text-align: center;
   min-width: 250px;
-  border: 4px black solid;
+  border: 2px black solid;
 }
 
 #instruction {

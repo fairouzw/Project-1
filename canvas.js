@@ -188,7 +188,7 @@ changeInterval()
 
 function gameOver() {
   clearInterval(startGame);
-  ctx.font = "23px myFirstFont";
+  ctx.font = "25px myFirstFont";
   ctx.fillStyle = "black";
   ctx.textAlign = "center";
   ctx.fillText("PRESS SPACEBAR TO RESTART", canvas.width / 2, canvas.height / 4);
