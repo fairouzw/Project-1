@@ -41,6 +41,8 @@ dies.src = "Audio/OldSchool43.m4a";
 let win = new Audio();
 win.src = "Audio/Win.mp3";
 
+let ring = new Audio();
+ring.src = "Audio/Impact8.m4a";
 
 let snakeArr = [];
 
@@ -71,7 +73,6 @@ function direction(event) {
   keysEnabled = false
 }
 
-
 function drawGame() {
   keysEnabled = true
 
@@ -79,7 +80,7 @@ function drawGame() {
 
   ctx.drawImage(ground, 0, 0, 600, 600);
 
-  //loop over snake array, to draw snake 
+  //loop over snakeArr, to draw snake 
 
   for (let i = 0; i < snakeArr.length; i++) {
     ctx.fillStyle = "green";
@@ -89,7 +90,7 @@ function drawGame() {
     ctx.strokeRect(snakeArr[i].x, snakeArr[i].y, 30, 30);
   }
 
-  //draw banana 
+  //draw bananas
 
   if (score % 50 == 0 && score != 0) {
     ctx.drawImage(foodImg2, bananaPos.x, bananaPos.y, 30, 30)
@@ -97,14 +98,14 @@ function drawGame() {
     ctx.drawImage(foodImg, bananaPos.x, bananaPos.y, 30, 30);
   }
 
-
   // head position
 
   let snakeX = snakeArr[0].x
   let snakeY = snakeArr[0].y
 
-  snakeArr.pop();
+  //removes lost block from snakeArr
 
+  snakeArr.pop();
 
   if (d == "LEFT") {
     snakeX -= 30;
@@ -121,12 +122,13 @@ function drawGame() {
   }
 
   //create new snake head
+
   let snakeHead = {
     x: snakeX,
     y: snakeY
   }
 
-  //adds snake head
+  //add snake head
   snakeArr.unshift(snakeHead)
 
   eatSelf()
@@ -137,6 +139,7 @@ function drawGame() {
     snakeArr.push(snakeHead)
     if (score % 50 == 0 && score != 0) {
       score += 30;
+      ring.play();
     } else {
       score += 10;
     }
@@ -169,13 +172,14 @@ function drawGame() {
 
 
     if (typeof (Storage) !== "undefined") {
-      // Store
+
+      // store score
       if (localStorageKey < score)
         localStorage.setItem("highestScore", score);
-      // Retrieve
+
+      // retrieve score
     }
     document.getElementById('score').innerText = `SCORE: ${score}`;
-
 
   }
 
@@ -198,10 +202,8 @@ function gameOver() {
   ctx.textAlign = "center";
   ctx.fillText("PRESS SPACEBAR TO RESTART", canvas.width / 2, canvas.height / 4);
 
-
   if (score > localStorageKey) {
     win.play();
-
 
     ctx.font = "33px myFirstFont";
     ctx.fillStyle = '#edc244';
@@ -209,7 +211,6 @@ function gameOver() {
 
     ctx.fillText("Sweet Bananas!", canvas.width / 2, canvas.height / 2);
     ctx.fillText("You set a new Top Score!", canvas.width / 2, canvas.height / 1.7)
-
 
   } else {
     dies.play();
